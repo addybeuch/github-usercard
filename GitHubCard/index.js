@@ -50,6 +50,45 @@ const followersArray = [];
     </div>
 */
 
+function cardMaker(card) {
+  const cardClass = document.createElement('div');
+  const userIMG = document.createElement('img');
+  const cardInfo = document.createElement('div');
+  const cardName = document.createElement('h3');
+  const cardUN = document.createElement('p');
+  const cardLoca = document.createElement('p');
+  const cardProf = document.createElement('p');
+  const followers = document.createElement('p');
+  const following = document.createElement('p');
+  const cardBio = document.createElement('p');
+
+  cardClass.appendChild(userIMG);
+  cardClass.appendChild(cardInfo);
+  cardInfo.appendChild(cardName);
+  cardInfo.appendChild(cardUN);
+  cardInfo.appendChild(cardLoca);
+  cardInfo.appendChild(cardProf);
+  cardInfo.appendChild(followers);
+  cardInfo.appendChild(following);
+  cardInfo.appendChild(cardBio);
+
+  cardClass.classList.add('card');
+  userIMG.src = avatar_url;
+  cardInfo.classList.add('card-info');
+  cardName.classList.add('name')
+  cardName.textContent = login;
+  cardUN.classList.add('username');
+  cardUN.textcontent = login;
+  cardLoca.textContent = `Location: ${location}`;
+  cardProf.textContent = html_url.href;
+  followers.textContent = `Followers: ${followers}`;
+  following.textContent = `Following: ${following}`;
+
+  return cardClass;
+}
+
+
+
 /*
   List of LS Instructors Github username's:
     tetondan
