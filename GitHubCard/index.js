@@ -4,6 +4,8 @@
     https://api.github.com/users/<your name>
 */
 
+const { default: axios } = require("axios");
+
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -49,6 +51,76 @@ const followersArray = [];
       </div>
     </div>
 */
+
+function cardMaker(card) {
+  const cardClass = document.createElement('div');
+  const userIMG = document.createElement('img');
+  const cardInfo = document.createElement('div');
+  const cardName = document.createElement('h3');
+  const cardUN = document.createElement('p');
+  const cardLoca = document.createElement('p');
+  const cardProf = document.createElement('p');
+  const followers = document.createElement('p');
+  const following = document.createElement('p');
+  const cardBio = document.createElement('p');
+  const address = document.createElement('a');
+
+
+  cardClass.classList.add('card');
+  cardInfo.classList.add('card-info');
+  cardName.classList.add('name')
+  cardUN.classList.add('username');
+  
+  
+  userIMG.src = card.cardImgURL;
+  cardName.textContent = card.name;
+  cardUN.textcontent = card.username;
+  cardLoca.textContent = `Location: ${card.location}`;
+  cardProf.textContent = `Profile: ${address}`;
+  followers.textContent = `Followers: ${card.followers}`;
+  following.textContent = `Following: ${card.following}`;
+  cardBio.textContent = `Bio: ${card.bio}`
+
+  cardClass.appendChild(userIMG);
+  cardClass.appendChild(cardInfo);
+  cardInfo.appendChild(cardName);
+  cardInfo.appendChild(cardUN);
+  cardInfo.appendChild(cardLoca);
+  cardInfo.appendChild(cardProf);
+  cardInfo.appendChild(followers);
+  cardInfo.appendChild(following);
+  cardInfo.appendChild(cardBio);
+  cardProf.appendChild(address);
+
+
+  return cardClass;
+}
+
+const beenza = document.querySelector('.cards')
+
+
+const createCard = (person) => {
+
+
+  axios.get(`https://api.github.com/users/${person}`)
+  .then(res => {
+    const info = {name: res.data.name, username: res.data.login, profile: res.data.login, followers: res.data.followers, following: res.data.following,
+      bio: res.data.bio, cardImgURL: res.data.avatar_url, Location: res.data.location, url: res.data.url};
+      beenza.appendChild(cardMaker(info))
+  })
+  .catch(err => {
+    console.log(err)
+  })
+}
+
+
+
+const array = ['addybeuch','tetondan','dustinmyers','justsml','luishrd','bigknell']
+array.forEach((fart) => {
+  createCard(fart);
+})
+
+
 
 /*
   List of LS Instructors Github username's:
