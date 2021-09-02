@@ -4,6 +4,8 @@
     https://api.github.com/users/<your name>
 */
 
+const { default: axios } = require("axios");
+
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -61,6 +63,23 @@ function cardMaker(card) {
   const followers = document.createElement('p');
   const following = document.createElement('p');
   const cardBio = document.createElement('p');
+  const address = document.createElement('a');
+
+
+  cardClass.classList.add('card');
+  cardInfo.classList.add('card-info');
+  cardName.classList.add('name')
+  cardUN.classList.add('username');
+  
+  
+  userIMG.src = card.cardImgURL;
+  cardName.textContent = card.name;
+  cardUN.textcontent = card.username;
+  cardLoca.textContent = `Location: ${card.location}`;
+  cardProf.textContent = `Profile: ${address}`;
+  followers.textContent = `Followers: ${card.followers}`;
+  following.textContent = `Following: ${card.following}`;
+  cardBio.textContent = `Bio: ${card.bio}`
 
   cardClass.appendChild(userIMG);
   cardClass.appendChild(cardInfo);
@@ -71,21 +90,35 @@ function cardMaker(card) {
   cardInfo.appendChild(followers);
   cardInfo.appendChild(following);
   cardInfo.appendChild(cardBio);
+  cardProf.appendChild(address);
 
-  cardClass.classList.add('card');
-  userIMG.src = avatar_url;
-  cardInfo.classList.add('card-info');
-  cardName.classList.add('name')
-  cardName.textContent = login;
-  cardUN.classList.add('username');
-  cardUN.textcontent = login;
-  cardLoca.textContent = `Location: ${location}`;
-  cardProf.textContent = html_url.href;
-  followers.textContent = `Followers: ${followers}`;
-  following.textContent = `Following: ${following}`;
 
   return cardClass;
 }
+
+const beenza = document.querySelector('.cards')
+
+
+const createCard = (person) => {
+
+
+  axios.get(`https://api.github.com/users/${person}`)
+  .then(res => {
+    const info = {name: res.data.name, username: res.data.login, profile: res.data.login, followers: res.data.followers, following: res.data.following,
+      bio: res.data.bio, cardImgURL: res.data.avatar_url, Location: res.data.location, url: res.data.url};
+      beenza.appendChild(cardMaker(info))
+  })
+  .catch(err => {
+    console.log(err)
+  })
+}
+
+
+
+const array = ['addybeuch','tetondan','dustinmyers','justsml','luishrd','bigknell']
+array.forEach((fart) => {
+  createCard(fart);
+})
 
 
 
